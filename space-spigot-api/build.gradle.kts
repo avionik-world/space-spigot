@@ -15,7 +15,7 @@ centralPortal {
 
     pom {
         name.set("Space Spigot Api")
-        description.set("Simplified Morphia and Jedis integration")
+        description.set("Extensions for spigot minecraft server")
         url.set("https://github.com/avionik-world/space-spigot")
 
         developers {

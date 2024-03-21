@@ -3,11 +3,14 @@ package world.avionik.space.spigot.plugin.plugin
 import org.bukkit.Bukkit
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
+import world.avionik.kotlin.paper.plugin.registerEvents
 import world.avionik.kotlin.paper.register
 import world.avionik.space.spigot.api.SpaceSpigotProvider
 import world.avionik.space.spigot.api.event.ServerTickEvent
 import world.avionik.space.spigot.api.task.task
 import world.avionik.space.spigot.plugin.api.SpaceSpigotProviderImpl
+import world.avionik.space.spigot.plugin.listener.PlayerMoveListener
+import world.avionik.space.spigot.plugin.listener.PlayerTickListener
 import world.avionik.space.spigot.plugin.listener.ServerTickListener
 
 /**
@@ -32,7 +35,12 @@ class SpigotPlugin : JavaPlugin() {
             pluginManager.callEvent(ServerTickEvent())
         }.runTaskTimer(0, 1)
 
-        pluginManager.registerEvents(ServerTickListener(), this)
+        pluginManager.registerEvents(
+            this,
+            ServerTickListener(),
+            PlayerMoveListener(),
+            PlayerTickListener()
+        )
     }
 
 }

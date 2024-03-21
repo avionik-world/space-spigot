@@ -31,6 +31,7 @@ subprojects {
 
         // avionik dependencies
         compileOnly("world.avionik:fancy-kotlin-paper:1.0.2")
+        compileOnly("world.avionik:minecraft-common:1.0.1")
     }
 
     tasks.named("shadowJar", ShadowJar::class) {

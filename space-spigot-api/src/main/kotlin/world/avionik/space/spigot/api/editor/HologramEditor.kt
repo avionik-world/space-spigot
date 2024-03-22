@@ -62,6 +62,26 @@ class HologramEditor(
     }
 
     /**
+     * Sets the height of this text display.
+     * @param height new height
+     * @return this editor instance
+     */
+    fun withDisplayHeight(height: Float): HologramEditor {
+        this.textDisplay.displayHeight = height
+        return this
+    }
+
+    /**
+     * Sets the width of this display.
+     * @param width new width
+     * @return this editor instance
+     */
+    fun withDisplayWidth(width: Float): HologramEditor {
+        this.textDisplay.displayWidth = width
+        return this
+    }
+
+    /**
      * Sets a [TextDisplay.TextAlignment] to the text display
      * @param alignment the display alignment
      * @return this editor instance

@@ -15,7 +15,7 @@ centralPortal {
 
     pom {
         name.set("Space Spigot Api")
-        description.set("Extensions for spigot minecraft server")
+        description.set("Small simplifications for spigot plugins")
         url.set("https://github.com/avionik-world/space-spigot")
 
         developers {

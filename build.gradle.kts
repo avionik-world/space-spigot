@@ -30,7 +30,7 @@ subprojects {
         compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
 
         // avionik dependencies
-        compileOnly("world.avionik:fancy-kotlin-paper:1.0.2")
+        compileOnly("world.avionik:fancy-kotlin-paper:1.0.3")
         compileOnly("world.avionik:minecraft-common:1.0.1")
     }
 

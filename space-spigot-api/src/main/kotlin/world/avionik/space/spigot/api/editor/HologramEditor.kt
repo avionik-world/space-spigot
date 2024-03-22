@@ -5,6 +5,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Display.Billboard
 import org.bukkit.entity.TextDisplay
 import org.bukkit.util.Transformation
+import world.avionik.kotlin.paper.spawn
 import world.avionik.minecraft.common.extension.text
 
 /**
@@ -147,7 +148,7 @@ class HologramEditor(
     }
 
     private fun createTextDisplay(): TextDisplay {
-        val textDisplay = this.location.world.spawn(this.location, TextDisplay::class.java)
+        val textDisplay = this.location.world.spawn<TextDisplay>(this.location)
         textDisplay.billboard = Billboard.CENTER
         return textDisplay
     }

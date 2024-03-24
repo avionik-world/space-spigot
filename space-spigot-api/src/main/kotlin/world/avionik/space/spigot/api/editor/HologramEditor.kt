@@ -82,6 +82,16 @@ class HologramEditor(
     }
 
     /**
+     * Sets the interpolation delay of this text display
+     * @param delay new delay
+     * @return this editor instance
+     */
+    fun withInterpolationDelay(delay: Int): HologramEditor {
+        this.textDisplay.interpolationDelay = delay
+        return this
+    }
+
+    /**
      * Sets a [TextDisplay.TextAlignment] to the text display
      * @param alignment the display alignment
      * @return this editor instance

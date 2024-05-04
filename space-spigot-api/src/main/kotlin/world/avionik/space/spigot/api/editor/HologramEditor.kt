@@ -2,8 +2,10 @@ package world.avionik.space.spigot.api.editor
 
 import net.kyori.adventure.text.Component
 import org.bukkit.Location
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Display.Billboard
 import org.bukkit.entity.TextDisplay
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.util.Transformation
 import world.avionik.kotlin.paper.spawn
 import world.avionik.minecraft.common.extension.text
@@ -147,6 +149,22 @@ class HologramEditor(
      */
     fun withYCloneLocation(yClone: Double): HologramEditor {
         this.yCloneLocation = yClone
+        return this
+    }
+
+    /**
+     * Sets a persistentDataContainer to the text display
+     * @param key the key this value will be stored under
+     * @param type the type this tag uses
+     * @param value the value to store in the tag
+     * @return this editor instance
+     */
+    fun <P, C : Any> withPersistentDataContainer(
+        key: NamespacedKey,
+        type: PersistentDataType<P, C>,
+        value: C
+    ): HologramEditor {
+        this.textDisplay.persistentDataContainer.set(key, type, value)
         return this
     }
 

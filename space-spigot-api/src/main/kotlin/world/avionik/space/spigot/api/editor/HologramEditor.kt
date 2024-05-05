@@ -21,7 +21,7 @@ class HologramEditor(
     private var yCloneLocation = 0.3
     private var nextLineHologram: HologramEditor? = null
 
-    private val textDisplay = createTextDisplay()
+    val textDisplay = createTextDisplay()
 
     /**
      * Sets a [Transformation] to the text display

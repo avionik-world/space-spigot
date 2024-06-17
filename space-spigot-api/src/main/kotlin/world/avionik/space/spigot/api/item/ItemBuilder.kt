@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Color
 import org.bukkit.FireworkEffect
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.block.banner.Pattern
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
@@ -16,6 +17,7 @@ import org.bukkit.inventory.meta.FireworkEffectMeta
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.PotionMeta
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionData
 import org.bukkit.potion.PotionType
 import world.avionik.minecraft.common.extension.text
@@ -143,6 +145,19 @@ class ItemBuilder(
      */
     fun withEnchantment(enchantment: Enchantment, level: Int, ignoreLevelRestriction: Boolean): ItemBuilder {
         this.itemMeta.addEnchant(enchantment, level, ignoreLevelRestriction)
+        return this
+    }
+
+    /**
+     * Sets a [PersistentDataContainer] to this itemMeta
+     * @param key the key this value will be stored under
+     * @param type the type this tag uses
+     * @param value the value to store in the tag
+     * @param <P> the generic java type of the tag value
+     * @param <C> the generic type of the object to store
+     */
+    fun <P, C : Any> withPersistentDataContainer(key: NamespacedKey, type: PersistentDataType<P, C>, value: C): ItemBuilder {
+        this.itemMeta.persistentDataContainer.set(key, type, value)
         return this
     }
 

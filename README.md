@@ -9,7 +9,7 @@ Space Spigot is an API that facilitates the use of some methods for spigot plugi
  <dependency>
     <groupId>world.avionik</groupId>
     <artifactId>space-spigot-api</artifactId>
-    <version>1.0.5</version>
+    <version>1.1.0</version>
     <scope>provided</scope>
   </dependency>
 </dependencies>
@@ -18,6 +18,6 @@ Space Spigot is an API that facilitates the use of some methods for spigot plugi
 ### Gradle
 ```groovy
 dependencies {
-    compileOnly 'world.avionik:space-spigot-api:1.0.5'
+    compileOnly 'world.avionik:space-spigot-api:1.1.0'
 }
 ```

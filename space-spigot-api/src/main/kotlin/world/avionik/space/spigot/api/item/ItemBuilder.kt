@@ -14,12 +14,12 @@ import org.bukkit.inventory.meta.BannerMeta
 import org.bukkit.inventory.meta.BookMeta
 import org.bukkit.inventory.meta.BookMeta.Generation
 import org.bukkit.inventory.meta.FireworkEffectMeta
-import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionData
 import org.bukkit.potion.PotionType
+import world.avionik.kotlin.paper.editMeta
 import world.avionik.minecraft.common.extension.text
 
 /**
@@ -31,7 +31,6 @@ class ItemBuilder(
     private val itemStack: ItemStack = ItemStack(material)
 ) {
 
-    private val itemMeta = itemStack.itemMeta
     private val lores = arrayListOf<Component>()
 
     /**
@@ -40,7 +39,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withDisplayName(component: Component?): ItemBuilder {
-        this.itemMeta.displayName(decodeComponent(component))
+        this.itemStack.editMeta { it.displayName(component) }
         return this
     }
 
@@ -79,7 +78,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withCustomModelData(data: Int?): ItemBuilder {
-        this.itemMeta.setCustomModelData(data)
+        this.itemStack.editMeta { it.setCustomModelData(data) }
         return this
     }
 
@@ -121,8 +120,10 @@ class ItemBuilder(
     fun withGlowing(glow: Boolean = true): ItemBuilder {
         if (!glow)
             return this
-        this.itemMeta.addEnchant(Enchantment.DURABILITY, 1, true)
-        this.itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+        this.itemStack.editMeta {
+            it.addEnchant(Enchantment.UNBREAKING, 1, true)
+            it.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+        }
         return this
     }
 
@@ -132,7 +133,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withUnbreakable(unbreakable: Boolean = true): ItemBuilder {
-        this.itemMeta.isUnbreakable = unbreakable
+        this.itemStack.editMeta { it.isUnbreakable = unbreakable }
         return this
     }
 
@@ -144,7 +145,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withEnchantment(enchantment: Enchantment, level: Int, ignoreLevelRestriction: Boolean): ItemBuilder {
-        this.itemMeta.addEnchant(enchantment, level, ignoreLevelRestriction)
+        this.itemStack.editMeta { it.addEnchant(enchantment, level, ignoreLevelRestriction) }
         return this
     }
 
@@ -157,7 +158,7 @@ class ItemBuilder(
      * @param <C> the generic type of the object to store
      */
     fun <P, C : Any> withPersistentDataContainer(key: NamespacedKey, type: PersistentDataType<P, C>, value: C): ItemBuilder {
-        this.itemMeta.persistentDataContainer.set(key, type, value)
+        this.itemStack.editMeta { it.persistentDataContainer.set(key, type, value) }
         return this
     }
 
@@ -167,7 +168,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withItemFlags(vararg itemFlag: ItemFlag): ItemBuilder {
-        this.itemMeta.addItemFlags(*itemFlag)
+        this.itemStack.editMeta { it.addItemFlags(*itemFlag) }
         return this
     }
 
@@ -177,7 +178,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withArmorColor(color: Color): ItemBuilder {
-        getSpecialItemMeta<LeatherArmorMeta>().setColor(color)
+        this.itemStack.editMeta<LeatherArmorMeta> { it.setColor(color) }
         return this
     }
 
@@ -186,8 +187,9 @@ class ItemBuilder(
      * @param potionType of the potion effect
      * @return this builder instance
      */
+    @Suppress("DEPRECATION", "removal")
     fun withPotionType(potionType: PotionType): ItemBuilder {
-        getSpecialItemMeta<PotionMeta>().basePotionData = PotionData(potionType)
+        this.itemStack.editMeta<PotionMeta> { it.basePotionData = PotionData(potionType) }
         return this
     }
 
@@ -197,7 +199,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withBannerPattern(pattern: Pattern): ItemBuilder {
-        getSpecialItemMeta<BannerMeta>().addPattern(pattern)
+        this.itemStack.editMeta<BannerMeta> { it.addPattern(pattern) }
         return this
     }
 
@@ -207,7 +209,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withFireworkEffect(fireworkEffect: FireworkEffect): ItemBuilder {
-        getSpecialItemMeta<FireworkEffectMeta>().effect = fireworkEffect
+        this.itemStack.editMeta<FireworkEffectMeta> { it.effect = fireworkEffect }
         return this
     }
 
@@ -226,7 +228,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withBookPage(vararg component: Component): ItemBuilder {
-        getSpecialItemMeta<BookMeta>().addPages(*component)
+        this.itemStack.editMeta<BookMeta> { it.addPages(*component) }
         return this
     }
 
@@ -246,7 +248,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withBookPage(id: Int, component: Component): ItemBuilder {
-        getSpecialItemMeta<BookMeta>().page(id, component)
+        this.itemStack.editMeta<BookMeta> { it.page(id, component) }
         return this
     }
 
@@ -266,7 +268,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withBookAuthor(author: String): ItemBuilder {
-        getSpecialItemMeta<BookMeta>().author = author
+        this.itemStack.editMeta<BookMeta> { it.author = author }
         return this
     }
 
@@ -276,7 +278,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withBookGeneration(generation: Generation): ItemBuilder {
-        getSpecialItemMeta<BookMeta>().generation = generation
+        this.itemStack.editMeta<BookMeta> { it.generation = generation }
         return this
     }
 
@@ -286,7 +288,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withBookTitle(component: Component): ItemBuilder {
-        getSpecialItemMeta<BookMeta>().title(component)
+        this.itemStack.editMeta<BookMeta> { it.title(component) }
         return this
     }
 
@@ -305,9 +307,8 @@ class ItemBuilder(
      */
     fun build(): ItemStack {
         if (this.lores.isNotEmpty()) {
-            this.itemMeta.lore(this.lores.map { decodeComponent(it) })
+            this.itemStack.editMeta { it.lore(this.lores.map { decodeComponent(it) }) }
         }
-        this.itemStack.itemMeta = this.itemMeta
         return this.itemStack
     }
 
@@ -318,12 +319,6 @@ class ItemBuilder(
      */
     fun serializeAsBytes(): ByteArray {
         return build().serializeAsBytes()
-    }
-
-    private inline fun <reified T : ItemMeta> getSpecialItemMeta(): T {
-        if (this.itemStack is T)
-            return this.itemStack
-        throw IllegalStateException("failed to cast itemMeta for $material")
     }
 
     private fun decodeComponent(component: Component?): Component? {

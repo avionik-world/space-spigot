@@ -39,7 +39,7 @@ class ItemBuilder(
      * @return this builder instance
      */
     fun withDisplayName(component: Component?): ItemBuilder {
-        this.itemStack.editMeta { it.displayName(component) }
+        this.itemStack.editMeta { it.displayName(decodeComponent(component)) }
         return this
     }
 
@@ -91,6 +91,16 @@ class ItemBuilder(
         if (component == null)
             return this
         this.lores.add(component)
+        return this
+    }
+
+    /**
+     * Sets a new lore line
+     * @param component the lore line
+     * @return this builder instance
+     */
+    fun withLoreLines(vararg component: Component?): ItemBuilder {
+        this.lores.addAll(component.filterNotNull())
         return this
     }
 
